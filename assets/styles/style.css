@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+.pantalla {
+  display: none;
+}
+
+.pantalla.active {
+  display: block;
+}
+
+#iniciarJuego, #disparo, #verRanking {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#iniciarJuego:hover, #disparo:hover, #verRanking:hover {
+  background-color: #45a049;
+}
+
+.hidden {
+  display: none;
+}
+
+.mapa {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapa div {
+  width: 30px;
+  height: 30px;
+  background-color: #ADD8E6;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+.mapa .hit {
+  background-color: red;
+}
+
+.mapa .miss {
+  background-color: lightgray;
+}
+
+.mapa .ship {
+  background-color: #0000FF;
+}
+
+.info-clima {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .mapa {
+    grid-template-columns: repeat(6, 30px);
+    grid-template-rows: repeat(6, 30px);
+  }
+} 
+
+#flag-container {
+  margin-top: 10px;
+}
+
+#selected-flag {
+  width: 50px;
+  height: 30px;
+  margin-top: 10px;
+}
+
