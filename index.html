@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Juego de Batalla Naval. ¡Juega Batalla Naval contra la máquina! Acierta los disparos y gana la batalla.">
   <title>Juego de Batalla Naval</title>
-  <link rel="stylesheet" href="assets/styles/style.css">
-  <script src="App.js"></script>
+  
+  <!-- Enlace a la hoja de estilo -->
+  <link rel="stylesheet" href="assets/styles/style.css"> 
+
+  <!-- Script de JavaScript deferido para que se ejecute después de cargar el HTML -->
+  <script src="App.js" defer></script>
 </head>
+
 <body>
   <div class="container">
     <!-- Pantalla Inicial -->
     <div id="inicio" class="pantalla active">
-      <h1>Batalla Naval</h1>
+      <h1>Bienvenido a Batalla Naval</h1>
       <div class="formulario">
+        <!-- Campo para el nickname del jugador -->
         <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" placeholder="Ingresa tu nombre"> 
-      <div id="flag-container">
-        <img src="https://flagsapi.com/CO/flat/64.png">
-      </div>
-        
+        <input type="text" id="nickname" placeholder="Ingresa tu nombre" required>
+       
+        <!-- Contenedor para la bandera -->
+        <div id="flag-container">
+          <img src="https://flagsapi.com/CO/flat/64.png" alt="Bandera de Colombia">
+        </div>
+
+        <!-- Selector de país -->
         <label for="pais">Selecciona tu país:</label>
-        <select id="pais">
+        <select id="pais" required>
           <!-- Aquí se cargarán los países desde la API -->
         </select>
-        
+
+        <!-- Campo para la ubicación -->
         <label for="ubicacion">Ubicación para la Batalla:</label>
-        <input type="text" id="ubicacion" placeholder="Ingresa la ciudad">
-        
+        <input type="text" id="ubicacion" placeholder="Ingresa la ciudad" required>
+
+        <!-- Selección del tamaño del tablero -->
+        <label for="rows">Filas del tablero:</label>
+        <input type="number" id="rows" min="10" max="20" value="10" required>
+       
+        <label for="cols">Columnas del tablero:</label>
+        <input type="number" id="cols" min="10" max="20" value="10" required>
+
+        <!-- Botón para iniciar el juego -->
         <button id="iniciarJuego">Iniciar Juego</button>
       </div>
     </div>
@@ -37,7 +57,7 @@
         <h2>Clima de la Batalla</h2>
         <p id="clima"></p>
       </div>
-      <div class="mapa" id="mapaJuego">
+      <div id="mapaJuego" class="mapa">
         <!-- El mapa se generará dinámicamente aquí -->
       </div>
       <button id="disparo" class="hidden">Disparar</button>
@@ -50,7 +70,6 @@
       <button id="verRanking">Ver Ranking</button>
     </div>
   </div>
-
-  
 </body>
+
 </html>

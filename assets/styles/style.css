@@ -1,3 +1,4 @@
+/* General */
 * {
   margin: 0;
   padding: 0;
@@ -6,90 +7,148 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f8ff;
+  background-color: #f4f4f4;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
+  color: #333;
+} 
+
+/* Establecer una imagen de fondo para todo el body */
+body {
+  background-image: url('/assets/images/battleship-pictures-gtxokkmhxeiycq20.jpg');
+  background-size: cover;  /* Ajusta la imagen para cubrir toda la pantalla */
+  background-position: center center; /* Centra la imagen en la pantalla */
+  background-attachment: fixed; /* Hace que la imagen se quede fija mientras haces scroll */
+  height: 100vh; /* Asegura que el body tenga la altura completa de la ventana */
 }
 
-.container {
-  text-align: center;
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+/* Pantallas */
 .pantalla {
   display: none;
+  text-align: center;
+  max-width: 100%;
+  width: 90%;
 }
 
 .pantalla.active {
   display: block;
 }
 
-#iniciarJuego, #disparo, #verRanking {
-  background-color: #4CAF50;
-  color: white;
+/* Formulario y Botones */
+input[type="text"],
+input[type="number"],
+select {
+  margin: 10px 0;
+  padding: 8px;
+  width: 80%;
+  max-width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
   padding: 10px 20px;
   border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Mapa de Juego */
+.mapa {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);  /* 10 columnas */
+  grid-template-rows: repeat(10, 40px);     /* 10 filas */
+  gap: 5px;
+  justify-content: center;
   margin-top: 20px;
 }
 
-#iniciarJuego:hover, #disparo:hover, #verRanking:hover {
-  background-color: #45a049;
-}
-
-.hidden {
-  display: none;
-}
-
-.mapa {
-  margin: 20px auto;
-  display: grid;
-  grid-template-columns: repeat(10, 30px);
-  grid-template-rows: repeat(10, 30px);
-  gap: 2px;
-  justify-content: center;
-  align-items: center;
-}
-
 .mapa div {
-  width: 30px;
-  height: 30px;
-  background-color: #ADD8E6;
-  border: 1px solid #000;
+  width: 40px;
+  height: 40px;
+  background-color: #add8e6;
+  border: 1px solid #aaa;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.mapa .hit {
+.mapa div.hit {
   background-color: red;
 }
 
-.mapa .miss {
-  background-color: lightgray;
+.mapa div.miss {
+  background-color: #ccc;
 }
 
-.mapa .ship {
-  background-color: #0000FF;
+.mapa div:hover {
+  transform: scale(1.1);
 }
 
-.info-clima {
-  margin-bottom: 20px;
-}
-
+/* Responsividad */
 @media (max-width: 768px) {
-  .mapa {
-    grid-template-columns: repeat(6, 30px);
-    grid-template-rows: repeat(6, 30px);
+  h1 {
+    font-size: 1.5rem;
   }
-} 
 
-#flag-container {
-  margin-top: 10px;
+  .mapa {
+    grid-template-columns: repeat(5, 40px); /* 5 columnas para pantallas más pequeñas */
+    grid-template-rows: repeat(5, 40px);    /* 5 filas */
+  }
+
+  input[type="text"],
+  select,
+  input[type="number"] {
+    width: 90%;
+  }
+
+  button {
+    width: 80%;
+  }
 }
 
-#selected-flag {
-  width: 50px;
-  height: 30px;
-  margin-top: 10px;
-}
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.2rem;
+  }
 
+  .mapa {
+    grid-template-columns: repeat(3, 30px); /* 3 columnas para pantallas pequeñas */
+    grid-template-rows: repeat(3, 30px);    /* 3 filas */
+  }
+
+  input[type="text"],
+  select,
+  input[type="number"] {
+    width: 100%;
+  }
+
+  button {
+    width: 90%;
+  }
+}
