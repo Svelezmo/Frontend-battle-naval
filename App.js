@@ -9,32 +9,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const juegoPantalla = document.getElementById("juego");
   const finalPantalla = document.getElementById("final");
   const paisSelect = document.getElementById("pais");
-  const flagContainer = document.getElementById("flag-container");
-  const selectedFlag = document.getElementById("selected-flag");
+  //const flagContainer = document.getElementById("flag-container");
+  //const selectedFlag = document.getElementById("selected-flag");
 
   // Cargar los países desde la API
   fetch("http://127.0.0.1:5000/countries")
     .then(response => response.json())
     .then(data => {
-      const paisSelect = document.getElementById("pais");
+      paisSelect.innerHTML = ""; // se limpia la informacion
       data.forEach(pais => {
         const option = document.createElement("option");
-        option.value = pais.code;
-        option.textContent = pais.name;
+        option.value = Object.keys(pais)[0];
+        option.textContent = pais[option.value];
         paisSelect.appendChild(option);
       });
-    });
-
-    // Mostrar la bandera del país seleccionado
-    paisSelect.addEventListener("change", () => {
-      const selectedCountryCode = paisSelect.value;
-      const countryFlagURL = `https://flagsapi.com/${selectedCountryCode}/flat/64.png`;
-      selectedFlag.src = countryFlagURL;
-    });
-  })
-  .catch(error => {
-    console.error("Error al cargar países:", error);
-  });
+    })
+      .catch(error => {
+        console.error("Error al cargar países:", error);
+      });
 
   // Función para iniciar el juego
   iniciarJuegoBtn.addEventListener("click", () => {
@@ -76,17 +68,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Obtener datos climáticos
+  // Obtener datos climáticos con la API
   function obtenerClima(ciudad) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=tu_api_key`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=be129bbfed895b76701dd13490560118`)
       .then(response => response.json())
       .then(data => {
-        const clima = data.weather[0].description;
-        climaElemento.textContent = `Clima: ${clima}`;
+        // Verificacion existencia de de data.weather 
+        if (data.weather && data.weather.length > 0) {
+          const clima = data.weather[0].description;
+          climaElemento.textContent = `Clima: ${clima}`;
+        } else {
+          climaElemento.textContent = 'Clima: Información no disponible';
+          console.log('Datos recibidos:', data); // Para depuración
+        }
       })
       .catch(error => {
         console.error("Error al obtener clima:", error);
       });
+      
   }
 
   // Al finalizar la partida
@@ -99,4 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
   verRankingBtn.addEventListener("click", () => {
     alert("Aquí mostraríamos el ranking");
   });
+
+})
 
