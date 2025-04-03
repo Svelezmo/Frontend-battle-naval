@@ -26,7 +26,7 @@
        
         <!-- Contenedor para la bandera -->
         <div id="flag-container">
-          <img src="https://flagsapi.com/CO/flat/64.png" alt="Bandera de Colombia">
+          <img id="selected-flag" src="https://flagsapi.com/CO/flat/64.png" alt="Bandera de Colombia">
         </div>
 
         <!-- Selector de país -->
@@ -52,22 +52,38 @@
     </div>
 
     <!-- Pantalla del Juego -->
-    <div id="juego" class="pantalla hidden">
-      <div class="info-clima">
-        <h2>Clima de la Batalla</h2>
-        <p id="clima"></p>
+    <div id="juego" class="pantalla">
+      <div class="info-juego">
+        <h2>Batalla Naval</h2>
+        <div class="info-clima">
+          <h3>Clima de la Batalla</h3>
+          <p id="clima">Cargando clima...</p>
+        </div>
+        <div class="instrucciones">
+          <p>Haz clic en una celda para disparar. Destruye todos los barcos enemigos para ganar.</p>
+          <p>Barcos enemigos restantes: <span id="barcos-restantes">5</span></p>
+        </div>
       </div>
+      
       <div id="mapaJuego" class="mapa">
         <!-- El mapa se generará dinámicamente aquí -->
       </div>
-      <button id="disparo" class="hidden">Disparar</button>
+      
+      <button id="disparo">Rendirse</button>
     </div>
 
     <!-- Pantalla Final -->
-    <div id="final" class="pantalla hidden">
+    <div id="final" class="pantalla">
       <h2>Fin del Juego</h2>
-      <p id="resultado"></p>
-      <button id="verRanking">Ver Ranking</button>
+      <p id="mensajeResultado"></p>
+      <div class="estadisticas-juego">
+        <p>Barcos destruidos: <span id="barcos-destruidos">0</span></p>
+        <p>Disparos realizados: <span id="disparos-totales">0</span></p>
+      </div>
+      <div class="botones-final">
+        <button id="verRanking">Ver Ranking</button>
+        <button id="jugar-de-nuevo">Jugar de nuevo</button>
+      </div>
     </div>
   </div>
 </body>

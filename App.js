@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Declaracion de filas y columnas globalmente 
   let filas, columnas;
+  let disparosHechos = [];  // Para registrar las celdas que la IA ya ha disparado
+  let barcosJugador = 5;    // Número de barcos del jugador
+  let barcosIA = 5;         // Número de barcos de la IA
 
   // Cargar los países desde la API
   fetch("http://127.0.0.1:5000/countries")
@@ -28,9 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
         paisSelect.appendChild(option);
       });
     })
-      .catch(error => {
-        console.error("Error al cargar países:", error);
-      });
+    .catch(error => {
+      console.error("Error al cargar países:", error);
+    });
 
   // Inicialización del mapa
   function inicializarMapa() {
@@ -41,8 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
         mapaJuegoData[i][j] = "agua";
       }
     }
+    // Reiniciar variables de juego
+    disparosHechos = [];
+    barcosJugador = 5;
+    barcosIA = 5;
   }
-  //inicializarMapa();  // Llamamos a la función para inicializar el mapa
 
   // Colocar los barcos de manera aleatoria (IA)
   function colocarBarcosIA() {
@@ -52,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let columna = Math.floor(Math.random() * columnas);
 
       if (mapaJuegoData[fila][columna] === "agua") {
-        mapaJuegoData[fila][columna] = "barco";  // Coloca el barco
+        mapaJuegoData[fila][columna] = "barcoIA";  // Coloca el barco de la IA
         barcos--;
       }
     }
@@ -66,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let columna = Math.floor(Math.random() * columnas);
 
       if (mapaJuegoData[fila][columna] === "agua") {
-        mapaJuegoData[fila][columna] = "barco";  // Coloca el barco
+        mapaJuegoData[fila][columna] = "barcoJugador";  // Coloca el barco del jugador
         barcos--;
       }
     }
@@ -74,25 +80,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Función para realizar disparos
   function disparar(fila, columna, esIA) {
-    if (mapaJuego[fila][columna] === "barco") {
-      console.log(esIA ? "La IA ha acertado!" : "¡El jugador ha acertado!");
-      mapaJuegoData[fila][columna] = "golpe"; // Marcamos el barco como golpeado
-      // Actualiza la vista
-      actualizarVistaMapa(fila, columna, "hit");
+    if (esIA) {
+      // IA dispara a barcos del jugador
+      if (mapaJuegoData[fila][columna] === "barcoJugador") {
+        console.log("La IA ha acertado!");
+        mapaJuegoData[fila][columna] = "golpeJugador"; // Marcamos el barco del jugador como golpeado
+        actualizarVistaMapa(fila, columna, "hitIA");
+        barcosJugador--;
+        if (barcosJugador <= 0) {
+          finalizarJuego(false); // El jugador pierde
+        }
+      } else if (mapaJuegoData[fila][columna] !== "golpeJugador" && mapaJuegoData[fila][columna] !== "agua_disparada") {
+        console.log("La IA ha fallado.");
+        mapaJuegoData[fila][columna] = "agua_disparada";
+        actualizarVistaMapa(fila, columna, "missIA");
+      }
     } else {
-      console.log(esIA ? "La IA ha fallado." : "¡El jugador ha fallado!");
-      mapaJuegoData[fila][columna] = "agua"; // Marcamos el disparo como fallido
-      // Actualiza la vista
-      actualizarVistaMapa(fila, columna, "miss");
+      // Jugador dispara a barcos de la IA
+      if (mapaJuegoData[fila][columna] === "barcoIA") {
+        console.log("¡El jugador ha acertado!");
+        mapaJuegoData[fila][columna] = "golpeIA"; // Marcamos el barco de la IA como golpeado
+        actualizarVistaMapa(fila, columna, "hit");
+        barcosIA--;
+        if (barcosIA <= 0) {
+          finalizarJuego(true); // El jugador gana
+        }
+      } else if (mapaJuegoData[fila][columna] !== "golpeIA" && mapaJuegoData[fila][columna] !== "agua_disparada") {
+        console.log("¡El jugador ha fallado!");
+        mapaJuegoData[fila][columna] = "agua_disparada";
+        actualizarVistaMapa(fila, columna, "miss");
+      }
     }
   }
 
-  let disparosHechos = [];  // Para registrar las celdas que la IA ya ha disparado
+  function finalizarJuego(jugadorGana) {
+    juegoPantalla.classList.remove("active");
+    finalPantalla.classList.add("active");
+    
+    const mensajeResultado = document.getElementById("mensajeResultado");
+    if (mensajeResultado) {
+      mensajeResultado.textContent = jugadorGana ? "¡Has ganado!" : "Has perdido";
+    }
+  }
 
   function actualizarVistaMapa(fila, columna, estado) {
     const indice = fila * columnas + columna;
     const celdas = mapaJuego.children;
-    celdas[indice].classList.add(estado); // "hit" o "miss"
+    if (indice >= 0 && indice < celdas.length) {
+      celdas[indice].classList.add(estado); // "hit", "miss", "hitIA", "missIA"
+    }
   }
 
   // Función para que la IA haga jugadas inteligentes
@@ -110,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     disparar(fila, columna, true);  // true porque es la IA
     
     // Si la IA acierta, buscar celdas cercanas
-    if (mapaJuegoData[fila][columna] === "golpe") {
+    if (mapaJuegoData[fila][columna] === "golpeJugador") {
       buscarCercanias(celda);
     }
   }
@@ -150,8 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const ubicacion = document.getElementById("ubicacion").value;
 
     // Obtener las filas y columnas desde los inputs
-     filas = parseInt(document.getElementById("rows").value);
-     columnas = parseInt(document.getElementById("cols").value);
+    filas = parseInt(document.getElementById("rows").value) || 10;
+    columnas = parseInt(document.getElementById("cols").value) || 10;
 
     if (nickname && pais && ubicacion) {
       // Mostrar pantalla de juego
@@ -161,8 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Inicializar mapa y colocar los barcos
       inicializarMapa();
       crearMapa(filas, columnas); // Crear la representación visual
-      colocarBarcosJugador(filas, columnas);  // Coloca los barcos del jugador
-      colocarBarcosIA(filas, columnas);       // Coloca los barcos de la IA
+      colocarBarcosJugador();  // Coloca los barcos del jugador
+      colocarBarcosIA();       // Coloca los barcos de la IA
+
+      // Depuración: mostrar barcos en consola
+      console.log("Mapa inicializado:", mapaJuegoData);
 
       // Cargar clima y empezar el juego
       obtenerClima(ubicacion);
@@ -171,26 +210,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Crear un mapa de juego dinámico (10x10)
+  // Crear un mapa de juego dinámico
   function crearMapa(filas, columnas) {
     mapaJuego.innerHTML = ""; // Limpiar el mapa antes de crear uno nuevo
+    mapaJuego.style.gridTemplateColumns = `repeat(${columnas}, 1fr)`;
+    mapaJuego.style.gridTemplateRows = `repeat(${filas}, 1fr)`;
+    
     for (let i = 0; i < filas * columnas; i++) {
       const div = document.createElement("div");
+      div.className = "celda";
+      div.dataset.index = i;
       div.addEventListener("click", () => manejarDisparo(i));
       mapaJuego.appendChild(div);
     }
   }
 
-  // Manejar el disparo
+  // Manejar el disparo del jugador
   function manejarDisparo(celda) {
     console.log("Disparo en la celda:", celda);
-    const celdas = mapaJuego.children;
-    if (Math.random() > 0.5) {
-      celdas[celda].classList.add("hit");
-    } else {
-      celdas[celda].classList.add("miss");
+    const fila = Math.floor(celda / columnas);
+    const columna = celda % columnas;
+    
+    // Verificar si la celda ya ha sido disparada
+    if (mapaJuegoData[fila][columna] === "golpeIA" || 
+        mapaJuegoData[fila][columna] === "agua_disparada") {
+      console.log("Esta celda ya ha sido disparada");
+      return;
     }
-    hacerJugadaMaquina();  // La IA hace su jugada después del jugador
+    
+    // Realizar el disparo
+    disparar(fila, columna, false); // false porque es el jugador
+    
+    // Solo hacemos jugada de la máquina si el juego no ha terminado
+    if (barcosIA > 0 && barcosJugador > 0) {
+      setTimeout(() => {
+        hacerJugadaMaquina();
+      }, 500); // Pequeño delay para mejor experiencia de usuario
+    }
   }
 
   // Obtener datos climáticos con la API
@@ -209,18 +265,17 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => {
         console.error("Error al obtener clima:", error);
+        climaElemento.textContent = 'Clima: Error al cargar datos';
       });
   }
 
-  // Al finalizar la partida
+  // Al finalizar la partida manualmente
   disparoBtn.addEventListener("click", () => {
-    juegoPantalla.classList.remove("active");
-    finalPantalla.classList.add("active");
+    finalizarJuego(false);
   });
 
   // Función para ver el ranking
   verRankingBtn.addEventListener("click", () => {
     alert("Aquí mostraríamos el ranking");
   });
-
 });
