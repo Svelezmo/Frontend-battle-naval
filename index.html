@@ -4,11 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Juego de Batalla Naval. ¡Juega Batalla Naval contra la máquina! Acierta los disparos y gana la batalla.">
+  <meta name="description"
+    content="Juego de Batalla Naval. ¡Juega Batalla Naval contra la máquina! Acierta los disparos y gana la batalla.">
   <title>Juego de Batalla Naval</title>
-  
+
   <!-- Enlace a la hoja de estilo -->
-  <link rel="stylesheet" href="assets/styles/style.css"> 
+  <link rel="stylesheet" href="assets/styles/style.css">
 
   <!-- Script de JavaScript deferido para que se ejecute después de cargar el HTML -->
   <script src="App.js" defer></script>
@@ -23,10 +24,10 @@
         <!-- Campo para el nickname del jugador -->
         <label for="nickname">Nickname:</label>
         <input type="text" id="nickname" placeholder="Ingresa tu nombre" required>
-       
+
         <!-- Contenedor para la bandera -->
         <div id="flag-container">
-          <img id="selected-flag" src="https://flagsapi.com/CO/flat/64.png" alt="Bandera de Colombia">
+          <img id="selected-flag" src="assets/images/flags/co.png" alt="Bandera de Colombia">
         </div>
 
         <!-- Selector de país -->
@@ -42,12 +43,113 @@
         <!-- Selección del tamaño del tablero -->
         <label for="rows">Filas del tablero:</label>
         <input type="number" id="rows" min="10" max="20" value="10" required>
-       
+
         <label for="cols">Columnas del tablero:</label>
         <input type="number" id="cols" min="10" max="20" value="10" required>
 
+        <!-- Nuevo campo para elegir modo de colocación de barcos -->
+        <div class="modo-barcos">
+          <label>Modo de colocación de barcos:</label>
+          <div class="radio-group">
+            <input type="radio" id="auto-ships" name="ship-placement" value="auto" checked>
+            <label for="auto-ships">Automático</label>
+
+            <input type="radio" id="manual-ships" name="ship-placement" value="manual">
+            <label for="manual-ships">Manual</label>
+          </div>
+        </div>
+
         <!-- Botón para iniciar el juego -->
         <button id="iniciarJuego">Iniciar Juego</button>
+      </div>
+      <!-- Nueva pantalla para colocación manual de barcos -->
+      <div id="colocarBarcos" class="pantalla">
+        <h2>Coloca tus barcos</h2>
+        <div class="instrucciones-barcos">
+          <p>Haz clic en una celda y selecciona la orientación para colocar tu barco.</p>
+          <p>Barcos restantes: <span id="barcos-por-colocar">5</span></p>
+        </div>
+
+        <div class="barcos-disponibles">
+          <div class="barco-seleccion" data-tipo="portaaviones" data-size="6">
+            <div class="barco-imagen">
+              <img src="assets/images/ships/portaaviones.png" alt="Portaaviones">
+            </div>
+            <p>Portaaviones (6)</p>
+          </div>
+          <div class="barco-seleccion" data-tipo="submarino" data-size="2">
+            <div class="barco-imagen">
+              <img src="assets/images/ships/submarino.png" alt="Submarino">
+            </div>
+            <p>Submarino (2)</p>
+          </div>
+          <div class="barco-seleccion" data-tipo="acorazado" data-size="2">
+            <div class="barco-imagen">
+              <img src="assets/images/ships/acorazado.png" alt="Acorazado">
+            </div>
+            <p>Acorazado (2)</p>
+          </div>
+          <div class="barco-seleccion" data-tipo="destructor" data-size="4">
+            <div class="barco-imagen">
+              <img src="assets/images/ships/destructor.png" alt="Destructor">
+            </div>
+            <p>Destructor (4)</p>
+          </div>
+          <div class="barco-seleccion" data-tipo="crucero" data-size="3">
+            <div class="barco-imagen">
+              <img src="assets/images/ships/crucero.png" alt="Crucero">
+            </div>
+            <p>Crucero (3)</p>
+          </div>
+          <div class="barco-seleccion" data-tipo="buque" data-size="3">
+            <div class="barco-imagen">
+              <img src="assets/images/ships/buque.png" alt="Buque de Guerra">
+            </div>
+            <p>Buque de Guerra (3)</p>
+          </div>
+        </div>
+
+        <div class="orientacion-container">
+          <label>Orientación:</label>
+          <div class="radio-group">
+            <input type="radio" id="horizontal" name="orientacion" value="horizontal" checked>
+            <label for="horizontal">Horizontal</label>
+
+            <input type="radio" id="vertical" name="orientacion" value="vertical">
+            <label for="vertical">Vertical</label>
+          </div>
+        </div> 
+        <div class="barcos-disponibles">
+          <h3>Barcos disponibles</h3>
+          <div class="barcos-lista">
+            <div class="barco-seleccion" data-tipo="portaaviones">Portaaviones (6)</div>
+            <div class="barco-seleccion" data-tipo="submarino">Submarino (2)</div>
+            <div class="barco-seleccion" data-tipo="acorazado">Acorazado (2)</div>
+            <div class="barco-seleccion" data-tipo="destructor">Destructor (4)</div>
+            <div class="barco-seleccion" data-tipo="crucero">Crucero (3)</div>
+            <div class="barco-seleccion" data-tipo="buque">Buque (3)</div>
+          </div>
+          
+          <div class="controles-colocacion">
+            <button id="cambiarOrientacion">Orientación: horizontal</button>
+            <button id="reiniciarColocacion">Reiniciar colocación</button>
+            <button id="confirmarColocacion" disabled>Confirmar colocación</button>
+          </div>
+          
+          <div class="info-colocacion">
+            <p>Barcos por colocar: <span id="barcos-por-colocar">6</span></p>
+            <p>Selecciona un barco, elige la orientación y haz clic en el tablero para colocarlo.</p>
+          </div>
+        </div>
+
+        <div id="mapaColocacion" class="mapa">
+          <!-- El mapa se generará dinámicamente aquí -->
+        </div>
+
+        <div class="botones-colocacion">
+          <button id="reiniciarColocacion">Reiniciar</button>
+          <button id="confirmarColocacion" disabled>Confirmar y Comenzar</button>
+        </div>
       </div>
     </div>
 
@@ -64,11 +166,11 @@
           <p>Barcos enemigos restantes: <span id="barcos-restantes">5</span></p>
         </div>
       </div>
-      
+
       <div id="mapaJuego" class="mapa">
         <!-- El mapa se generará dinámicamente aquí -->
       </div>
-      
+
       <button id="disparo">Rendirse</button>
     </div>
 

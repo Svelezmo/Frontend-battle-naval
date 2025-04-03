@@ -1,4 +1,4 @@
-/* General */
+/* Reset y estilos generales */
 * {
   margin: 0;
   padding: 0;
@@ -7,25 +7,21 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  color: #333;
+  /* Configuración del fondo */
+  background-image: url('../images/battleship-pictures-gtxokkmhxeiycq20.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  /* Layout */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   overflow: hidden;
-  color: #333;
-} 
-
-/* Establecer una imagen de fondo para todo el body */
-body {
-  background-image: url('/assets/images/battleship-pictures-gtxokkmhxeiycq20.jpg');
-  background-size: cover;  /* Ajusta la imagen para cubrir toda la pantalla */
-  background-position: center center; /* Centra la imagen en la pantalla */
-  background-attachment: fixed; /* Hace que la imagen se quede fija mientras haces scroll */
-  height: 100vh; /* Asegura que el body tenga la altura completa de la ventana */
 }
 
-
+/* Tipografía */
 h1 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -36,33 +32,72 @@ h2 {
   margin-bottom: 15px;
 }
 
-/* Pantallas */
+/* Contenedores y pantallas */
+.container {
+  width: 90%;
+  max-width: 800px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
 .pantalla {
   display: none;
   text-align: center;
-  max-width: 100%;
-  width: 90%;
+  width: 100%;
 }
 
 .pantalla.active {
   display: block;
 }
 
-/* Formulario y Botones */
+/* Formularios e inputs */
+.formulario {
+  margin: 20px auto;
+  max-width: 500px;
+}
+
 input[type="text"],
 input[type="number"],
 select {
   margin: 10px 0;
-  padding: 8px;
+  padding: 10px;
   width: 80%;
   max-width: 300px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* Componente de bandera */
+#flag-container {
+  margin: 15px auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#selected-flag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botones */
 button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
   background-color: #007bff;
   color: white;
@@ -72,6 +107,9 @@ button {
   margin-top: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, transform 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 button:hover {
@@ -82,11 +120,11 @@ button:hover {
 /* Mapa de Juego */
 .mapa {
   display: grid;
-  grid-template-columns: repeat(10, 40px);  /* 10 columnas */
-  grid-template-rows: repeat(10, 40px);     /* 10 filas */
+  grid-template-columns: repeat(var(--cols, 10), 40px);
+  grid-template-rows: repeat(var(--rows, 10), 40px);
   gap: 5px;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto;
 }
 
 .mapa div {
@@ -110,15 +148,228 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* Info del juego */
+.info-juego {
+  margin-bottom: 20px;
+}
+
+.info-clima, .instrucciones {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+}
+
+/* Pantalla final */
+.estadisticas-juego {
+  margin: 20px 0;
+  font-size: 1.2rem;
+}
+
+.botones-final {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
 /* Responsividad */
 @media (max-width: 768px) {
   h1 {
     font-size: 1.5rem;
   }
+  /* Estilos para la nueva sección de colocación de barcos */
+.barcos-disponibles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.barco-seleccion {
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 140px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.barco-seleccion:hover {
+  border-color: #4682B4;
+  background-color: #f0f8ff;
+}
+
+.barco-seleccion.selected {
+  border-color: #4682B4;
+  background-color: #e6f2ff;
+  box-shadow: 0 0 5px rgba(70, 130, 180, 0.5);
+}
+
+.barco-seleccion.placed {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.barco-imagen {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.barco-imagen img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.radio-group {
+  margin: 10px 0;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 5px;
+}
+
+.orientacion-container {
+  margin-bottom: 20px;
+}
+
+#mapaColocacion .celda {
+  cursor: pointer;
+}
+
+#mapaColocacion .celda.valid-placement {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+#mapaColocacion .celda.invalid-placement {
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+#mapaColocacion .celda.ocupado {
+  background-color: #4682B4;
+}
+
+.botones-colocacion {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modo-barcos {
+  margin: 10px 0;
+}
+
+.instrucciones-barcos {
+  margin-bottom: 15px;
+}
+/* Estilos para el mapa de colocación */
+.mapa-colocacion {
+  display: grid;
+  gap: 2px;
+  margin: 20px auto;
+  width: 400px;
+  height: 400px;
+  background-color: #f0f0f0;
+}
+
+/* Estilos para las celdas en el mapa de colocación */
+.mapa-colocacion .celda {
+  background-color: #b3e0ff;
+  border: 1px solid #7fc7ff;
+  cursor: pointer;
+}
+
+/* Estilo para barcos colocados */
+.barco-colocado {
+  background-color: #444 !important;
+}
+
+/* Estilos para previsualización */
+.preview-valid {
+  background-color: #4CAF50 !important;
+  opacity: 0.7;
+}
+
+.preview-invalid {
+  background-color: #F44336 !important;
+  opacity: 0.7;
+}
+
+/* Estilos para barcos seleccionables */
+.barcos-disponibles {
+  margin: 20px;
+}
+
+.barcos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.barco-seleccion {
+  padding: 10px;
+  background-color: #ddd;
+  border: 1px solid #999;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.barco-seleccion:hover {
+  background-color: #ccc;
+}
+
+.barco-seleccion.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.barco-seleccion.placed {
+  background-color: #28a745;
+  color: white;
+  cursor: not-allowed;
+}
+
+/* Controles de colocación */
+.controles-colocacion {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.controles-colocacion button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.controles-colocacion button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.info-colocacion {
+  margin-top: 20px;
+}
 
   .mapa {
-    grid-template-columns: repeat(5, 40px); /* 5 columnas para pantallas más pequeñas */
-    grid-template-rows: repeat(5, 40px);    /* 5 filas */
+    /* Usar CSS variables para controlar el tamaño dinámicamente */
+    --cell-size: 35px;
+    grid-template-columns: repeat(var(--cols, 10), var(--cell-size));
+    grid-template-rows: repeat(var(--rows, 10), var(--cell-size));
+  }
+
+  .mapa div {
+    width: var(--cell-size);
+    height: var(--cell-size);
   }
 
   input[type="text"],
@@ -137,18 +388,23 @@ button:hover {
     font-size: 1.2rem;
   }
 
+  .container {
+    padding: 15px 10px;
+  }
+
   .mapa {
-    grid-template-columns: repeat(3, 30px); /* 3 columnas para pantallas pequeñas */
-    grid-template-rows: repeat(3, 30px);    /* 3 filas */
+    --cell-size: 30px;
   }
 
   input[type="text"],
   select,
   input[type="number"] {
     width: 100%;
+    padding: 8px;
   }
 
   button {
-    width: 90%;
+    width: 100%;
+    padding: 10px;
   }
 }
