@@ -17,7 +17,7 @@ class Game {
       
       this.currentTurn = this.player; // El jugador inicia
       this.gameOver = false;
-      this.score = 0;
+      this.score = new Score();
       
       // Estados del juego
       this.state = {

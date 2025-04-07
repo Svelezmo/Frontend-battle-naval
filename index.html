@@ -1,210 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Batalla Naval</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <title>Juego de Batalla Naval</title>
+
+  <!-- Incluir Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Incluir CSS personalizado -->
+  <link rel="stylesheet" href="assets/styles/style.css">
+  <link rel="stylesheet" href="assets/styles/responsive.css">
+
+  <!-- Incluir JS -->
+  <script src="assets/js/RenderUI.js" defer></script>
+  <script src="assets/js/BoardController.js" defer></script>
+  <script src="assets/js/GameController.js" defer></script>
+  <script src="assets/js/UIController.js" defer></script>
+  <script src="assets/js/Ship.js" defer></script>
+  <script src="assets/js/Board.js" defer></script>
+  <script src="assets/js/Game.js" defer></script>
+  <script src="assets/js/Player.js" defer></script>
+  <script src="assets/js/Score.js" defer></script>
+  <script src="assets/js/helpers.js" defer></script>
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/validators.js" defer></script>
+
 </head>
+
 <body>
-  <!-- Pantalla de inicio -->
-  <section id="inicio" class="pantalla active">
-    <h1>Batalla Naval</h1>
-    <div class="form-container">
-      <div class="form-group">
+  <div class="container">
+    <!-- Pantalla Inicial -->
+    <div id="inicio" class="pantalla active">
+      <h1>Bienvenido a Batalla Naval</h1>
+      <div class="formulario">
         <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" placeholder="Ingresa tu nombre">
-      </div>
-      
-      <div class="form-group">
+        <input type="text" id="nickname" placeholder="Ingresa tu nombre" class="form-control">
+
         <label for="pais">Selecciona tu país:</label>
-        <select id="pais">
-          <option value="">Cargando países...</option>
+        <select id="pais" class="form-select">
+          <!-- Aquí se cargarán los países desde la API -->
         </select>
-        <div class="flag-container">
-          <img id="selected-flag" src="" alt="Bandera" style="display: none;">
-        </div>
-      </div>
-      
-      <div class="form-group">
+
         <label for="ubicacion">Ubicación para la Batalla:</label>
-        <input type="text" id="ubicacion" placeholder="Ingresa la ciudad">
-      </div>
-      
-      <div class="form-group">
-        <label for="filas">Tamaño del tablero:</label>
-        <div class="size-inputs">
-          <input type="number" id="filas" min="10" max="20" value="10" placeholder="Filas">
-          <span>x</span>
-          <input type="number" id="columnas" min="10" max="20" value="10" placeholder="Columnas">
-        </div>
-      </div>
-      
-      <button id="iniciarJuego" class="btn">Siguiente</button>
-    </div>
-  </section>
-  
-  <!-- Pantalla de configuración de barcos -->
-  <section id="configuracion" class="pantalla">
-    <h2>Coloca tus barcos</h2>
-    
-    <div class="setup-container">
-      <div class="ships-selection">
-        <h3>Barcos disponibles</h3>
-        <div class="ship-list">
-          <div class="ship" data-ship="portaaviones" data-size="5" draggable="true">
-            <div class="ship-info">
-              <span class="ship-name">Portaaviones</span>
-              <span class="ship-size">5 casillas</span>
-            </div>
-            <div class="ship-preview"></div>
-          </div>
-          <div class="ship" data-ship="buque" data-size="4" draggable="true">
-            <div class="ship-info">
-              <span class="ship-name">Buque</span>
-              <span class="ship-size">4 casillas</span>
-            </div>
-            <div class="ship-preview"></div>
-          </div>
-          <div class="ship" data-ship="submarino" data-size="3" draggable="true">
-            <div class="ship-info">
-              <span class="ship-name">Submarino</span>
-              <span class="ship-size">3 casillas</span>
-            </div>
-            <div class="ship-preview"></div>
-          </div>
-          <div class="ship" data-ship="crucero" data-size="3" draggable="true">
-            <div class="ship-info">
-              <span class="ship-name">Crucero</span>
-              <span class="ship-size">3 casillas</span>
-            </div>
-            <div class="ship-preview"></div>
-          </div>
-          <div class="ship" data-ship="lancha" data-size="2" draggable="true">
-            <div class="ship-info">
-              <span class="ship-name">Lancha</span>
-              <span class="ship-size">2 casillas</span>
-            </div>
-            <div class="ship-preview"></div>
-          </div>
-        </div>
-        <div class="controls">
-          <button id="rotarBarco" class="btn">Rotar barco</button>
-          <button id="colocacionAleatoria" class="btn">Colocación aleatoria</button>
-        </div>
-      </div>
-      
-      <div class="board-setup">
-        <div id="tableroConfig" class="tablero"></div>
+        <input type="text" id="ubicacion" placeholder="Ingresa la ciudad" class="form-control">
+
+        <label for="rows">Filas del tablero:</label>
+        <input type="number" id="rows" min="10" max="20" value="10" class="form-control">
+
+        <label for="cols">Columnas del tablero:</label>
+        <input type="number" id="cols" min="10" max="20" value="10" class="form-control">
+
+        <button id="iniciarJuego" class="btn btn-primary w-100 mt-3">Iniciar Juego</button>
       </div>
     </div>
-    
-    <button id="iniciarBatalla" class="btn">¡Iniciar batalla!</button>
-  </section>
-  
-  <!-- Pantalla del juego -->
-  <section id="juego" class="pantalla">
-    <div class="game-header">
-      <h2>Batalla Naval</h2>
-      <div class="game-info">
-        <div id="clima" class="clima-info">
-          <span class="clima-titulo">Clima:</span>
-          <span class="clima-valor">Cargando...</span>
-          <img id="clima-icon" src="" alt="Clima">
-        </div>
-        <div class="turno-info">
-          <span class="turno-titulo">Turno:</span>
-          <span id="turno-valor" class="turno-valor">Tu turno</span>
-        </div>
-        <div class="puntaje-info">
-          <span class="puntaje-titulo">Puntaje:</span>
-          <span id="puntaje-valor" class="puntaje-valor">0</span>
-        </div>
+
+    <!-- Pantalla del Juego -->
+    <div id="juego" class="pantalla hidden">
+      <div class="info-clima">
+        <h2>Clima de la Batalla</h2>
+        <p id="clima"></p>
       </div>
-    </div>
-    
-    <div class="game-boards">
-      <div class="player-board">
-        <h3>Tu tablero</h3>
-        <div id="tableroJugador" class="tablero"></div>
+      <div id="mapaJuego" class="mapa">
+        <!-- El mapa se generará dinámicamente aquí -->
       </div>
-      
-      <div class="enemy-board">
-        <h3>Tablero enemigo</h3>
-        <div id="tableroEnemigo" class="tablero"></div>
-      </div>
+      <button id="disparo" class="btn btn-danger hidden w-100 mt-3">Disparar</button>
     </div>
-    
-    <div class="game-controls">
-      <button id="exportarMapas" class="btn">Exportar mapas</button>
-      <button id="finalizarJuego" class="btn">Finalizar juego</button>
-    </div>
-  </section>
-  
-  <!-- Pantalla final -->
-  <section id="final" class="pantalla">
-    <div class="resultado-container">
-      <h2 id="resultado-titulo">¡Fin del juego!</h2>
-      <div id="resultado-detalles" class="resultado-detalles">
-        <p id="resultado-mensaje"></p>
-        <div class="puntaje-final">
-          <span class="puntaje-titulo">Puntaje final:</span>
-          <span id="puntaje-final" class="puntaje-valor">0</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="ranking-container">
-      <h3>Ranking global</h3>
-      <div id="ranking-list" class="ranking-list">
-        <p>Cargando ranking...</p>
-      </div>
-    </div>
-    
-    <div class="final-controls">
-      <button id="nuevoJuego" class="btn">Nuevo juego</button>
-      <button id="verRanking" class="btn">Ver ranking completo</button>
-    </div>
-  </section>
-  
-  <!-- Modales -->
-  <div id="modal-ranking" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Ranking Global</h2>
-      <div id="ranking-completo" class="ranking-completo"></div>
+
+    <!-- Pantalla Final -->
+    <div id="final" class="pantalla hidden">
+      <h2>Fin del Juego</h2>
+      <p id="resultado"></p>
+      <button id="verRanking" class="btn btn-info w-100 mt-3">Ver Ranking</button>
     </div>
   </div>
-  
-  <div id="modal-exportar" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Mapas exportados</h2>
-      <div class="mapas-exportados">
-        <div>
-          <h3>Tu mapa</h3>
-          <pre id="mapa-jugador"></pre>
-        </div>
-        <div>
-          <h3>Mapa enemigo</h3>
-          <pre id="mapa-enemigo"></pre>
-        </div>
-      </div>
-      <button id="copiar-mapas" class="btn">Copiar al portapapeles</button>
-    </div>
-  </div>
-  
-  <!-- Scripts -->
-  <script src="js/config.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/models/Ship.js"></script>
-  <script src="js/models/Board.js"></script>
-  <script src="js/models/Player.js"></script>
-  <script src="js/models/Game.js"></script>
-  <script src="js/controllers/BoardController.js"></script>
-  <script src="js/controllers/UIController.js"></script>
-  <script src="js/controllers/GameController.js"></script>
-  <script src="js/main.js"></script>
+
+  <!-- Incluir Scripts de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

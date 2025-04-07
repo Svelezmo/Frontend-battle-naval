@@ -1,4 +1,4 @@
-/* Reset y estilos generales */
+/* Estilos generales del cuerpo */
 * {
   margin: 0;
   padding: 0;
@@ -6,42 +6,38 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  color: #333;
-  /* Configuración del fondo */
-  background-image: url('../images/battleship-pictures-gtxokkmhxeiycq20.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  /* Layout */
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4; /* Fondo gris claro */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  color: #333;
   overflow: hidden;
 }
 
-/* Tipografía */
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Títulos */
 h1 {
-  font-size: 2rem;
+  font-size: 3rem;
+  color: #007bff;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: #007bff;
   margin-bottom: 15px;
 }
 
-/* Contenedores y pantallas */
-.container {
-  width: 90%;
-  max-width: 800px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
+/* Pantallas (Inicio, Juego, Final) */
 .pantalla {
   display: none;
   text-align: center;
@@ -52,440 +48,197 @@ h2 {
   display: block;
 }
 
-/* Formularios e inputs */
-.formulario {
-  margin: 20px auto;
-  max-width: 500px;
+/* Pantalla de inicio */
+#inicio {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
+/* Formulario de entrada */
+.formulario {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Etiquetas */
+label {
+  font-weight: bold;
+  color: #007bff;
+  display: block;
+  margin: 10px 0;
+}
+
+/* Inputs y Select */
 input[type="text"],
 input[type="number"],
 select {
-  margin: 10px 0;
-  padding: 10px;
-  width: 80%;
+  width: 100%;
   max-width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-/* Componente de bandera */
-#flag-container {
-  margin: 15px auto;
-  width: 64px;
-  height: 64px;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#selected-flag {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* Botones */
 button {
-  padding: 12px 24px;
-  border: none;
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
   font-size: 1rem;
   cursor: pointer;
   border-radius: 5px;
+  border: none;
   margin-top: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 button:hover {
   background-color: #0056b3;
-  transform: scale(1.05);
 }
 
-/* Mapa de Juego */
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Mapa de juego */
 .mapa {
   display: grid;
-  grid-template-columns: repeat(var(--cols, 10), 40px);
-  grid-template-rows: repeat(var(--rows, 10), 40px);
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
   gap: 5px;
   justify-content: center;
-  margin: 20px auto;
+  margin-top: 20px;
 }
 
-.mapa div {
+.mapa .cell {
   width: 40px;
   height: 40px;
-  background-color: #add8e6;
+  background-color: #add8e6;  /* Agua */
   border: 1px solid #aaa;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.mapa div.hit {
-  background-color: red;
+.mapa .cell.ship {
+  background-color: #008080;  /* Barco */
 }
 
-.mapa div.miss {
-  background-color: #ccc;
+.mapa .cell.hit {
+  background-color: red;  /* Golpe */
 }
 
-.mapa div:hover {
-  transform: scale(1.1);
+.mapa .cell.miss {
+  background-color: #ccc;  /* Fallo */
 }
 
-/* Info del juego */
-.info-juego {
-  margin-bottom: 20px;
-}
-
-.info-clima, .instrucciones {
-  margin-top: 15px;
+/* Mensajes del juego */
+.message {
+  margin-top: 10px;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
-}
-
-/* Pantalla final */
-.estadisticas-juego {
-  margin: 20px 0;
-  font-size: 1.2rem;
-}
-
-.botones-final {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-  /* Estilos para la nueva sección de colocación de barcos */
-.barcos-disponibles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.barco-seleccion {
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  width: 140px;
   text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  font-weight: bold;
 }
 
-.barco-seleccion:hover {
-  border-color: #4682B4;
-  background-color: #f0f8ff;
-}
-
-.barco-seleccion.selected {
-  border-color: #4682B4;
-  background-color: #e6f2ff;
-  box-shadow: 0 0 5px rgba(70, 130, 180, 0.5);
-}
-
-.barco-seleccion.placed {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.barco-imagen {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.barco-imagen img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.radio-group {
-  margin: 10px 0;
-}
-
-.radio-group input[type="radio"] {
-  margin-right: 5px;
-}
-
-.orientacion-container {
-  margin-bottom: 20px;
-}
-
-#mapaColocacion .celda {
-  cursor: pointer;
-}
-
-#mapaColocacion .celda.valid-placement {
-  background-color: rgba(0, 255, 0, 0.2);
-}
-
-#mapaColocacion .celda.invalid-placement {
-  background-color: rgba(255, 0, 0, 0.2);
-}
-
-#mapaColocacion .celda.ocupado {
-  background-color: #4682B4;
-}
-
-.botones-colocacion {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.modo-barcos {
-  margin: 10px 0;
-}
-
-.instrucciones-barcos {
-  margin-bottom: 15px;
-}
-/* Estilos para el mapa de colocación */
-.mapa-colocacion {
-  display: grid;
-  gap: 2px;
-  margin: 20px auto;
-  width: 400px;
-  height: 400px;
-  background-color: #f0f0f0;
-}
-
-/* Estilos para las celdas en el mapa de colocación */
-.mapa-colocacion .celda {
-  background-color: #b3e0ff;
-  border: 1px solid #7fc7ff;
-  cursor: pointer;
-}
-
-/* Estilo para barcos colocados */
-.barco-colocado {
-  background-color: #444 !important;
-}
-
-/* Estilos para previsualización */
-.preview-valid {
-  background-color: #4CAF50 !important;
-  opacity: 0.7;
-}
-
-.preview-invalid {
-  background-color: #F44336 !important;
-  opacity: 0.7;
-}
-
-/* Estilos para barcos seleccionables */
-.barcos-disponibles {
-  margin: 20px;
-}
-
-.barcos-lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.barco-seleccion {
-  padding: 10px;
-  background-color: #ddd;
-  border: 1px solid #999;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.barco-seleccion:hover {
-  background-color: #ccc;
-}
-
-.barco-seleccion.selected {
-  background-color: #007bff;
-  color: white;
-}
-
-.barco-seleccion.placed {
+.message.success {
   background-color: #28a745;
   color: white;
-  cursor: not-allowed;
 }
 
-/* Controles de colocación */
-.controles-colocacion {
-  display: flex;
-  gap: 10px;
+.message.error {
+  background-color: #dc3545;
+  color: white;
+}
+
+.message.warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+/* Contenedor para los mensajes */
+#message-container {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Pantalla Final */
+#final {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#resultado {
+  font-size: 1.5rem;
+  color: #007bff;
   margin-bottom: 20px;
 }
 
-.controles-colocacion button {
-  padding: 8px 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.controles-colocacion button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-.info-colocacion {
-  margin-top: 20px;
-}
-
-  .mapa {
-    /* Usar CSS variables para controlar el tamaño dinámicamente */
-    --cell-size: 35px;
-    grid-template-columns: repeat(var(--cols, 10), var(--cell-size));
-    grid-template-rows: repeat(var(--rows, 10), var(--cell-size));
+/* Responsividad para dispositivos móviles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
   }
 
-  .mapa div {
-    width: var(--cell-size);
-    height: var(--cell-size);
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .mapa {
+    grid-template-columns: repeat(6, 40px);
+    grid-template-rows: repeat(6, 40px);
   }
 
   input[type="text"],
-  select,
-  input[type="number"] {
+  input[type="number"],
+  select {
     width: 90%;
+    max-width: 250px;
   }
 
   button {
-    width: 80%;
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
     font-size: 1.2rem;
   }
 
-  .container {
-    padding: 15px 10px;
-  }
-
   .mapa {
-    --cell-size: 30px;
+    grid-template-columns: repeat(4, 30px);
+    grid-template-rows: repeat(4, 30px);
   }
 
   input[type="text"],
-  select,
-  input[type="number"] {
+  input[type="number"],
+  select {
     width: 100%;
-    padding: 8px;
+    max-width: 200px;
   }
 
   button {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
   }
-}
-/* Estilo base para todos los barcos */
-.barco-seleccion {
-  position: relative;
-  padding: 15px;
-  margin: 10px;
-  border-radius: 5px;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 2px solid #333;
-}
 
-/* Estilos específicos para cada tipo de barco */
-.barco-seleccion[data-tipo="portaaviones"] {
-  background-color: #FF5733;
-  width: 120px; /* Más largo para representar un portaaviones */
-}
-
-.barco-seleccion[data-tipo="submarino"] {
-  background-color: #33FF57;
-  width: 80px;
-}
-
-.barco-seleccion[data-tipo="acorazado"] {
-  background-color: #3357FF;
-  width: 100px;
-}
-
-.barco-seleccion[data-tipo="destructor"] {
-  background-color: #F033FF;
-  width: 90px;
-}
-
-.barco-seleccion[data-tipo="crucero"] {
-  background-color: #FF33A8;
-  width: 85px;
-}
-
-.barco-seleccion[data-tipo="buque"] {
-  background-color: #33FFF6;
-  width: 85px;
-}
-
-/* Estilo para barco seleccionado */
-.barco-seleccion.selected {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-  border-color: white;
-}
-
-/* Estilo para barcos ya colocados */
-.barco-seleccion.placed {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Estilo para el barco en el tablero */
-.barco-colocado {
-  background-color: #444 !important;
-  border: 1px solid #fff;
-}
-
-/* Estilo para barcos golpeados */
-.hit {
-  background-color: #FF5733 !important;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="white"/></svg>') !important;
-  background-size: 70% 70% !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-}
-
-/* Estilo para agua */
-.miss {
-  background-color: #3498db !important;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="white" opacity="0.6"/></svg>') !important;
-  background-size: 70% 70% !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
+  #resultado {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
 }

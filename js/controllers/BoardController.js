@@ -1,12 +1,14 @@
-// js/controllers/BoardController.js
+import { validateShipPlacement } from './validators.js'; 
+
 class BoardController {
-    constructor(gameController) {
+    constructor(gameController, uiController) {
       this.gameController = gameController;
+      this.uiController = uiController;
       this.playerBoardElement = document.getElementById('player-board');
       this.computerBoardElement = document.getElementById('computer-board');
       this.setupBoardElement = document.getElementById('setup-board');
-      this.currentShipType = null;
-      this.isVertical = false;
+      this.currentShipType = null;  // Tipo de barco seleccionado
+      this.isVertical = true; // Posición vertical u horizontal
       this.setupMode = true;
     }
     

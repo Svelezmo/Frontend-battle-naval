@@ -1,0 +1,135 @@
+/* responsive.css - Ajustes para que la interfaz sea completamente responsive */
+
+/* Pantalla de Juego */
+@media (max-width: 1200px) {
+    /* Contenedor del juego */
+    .container {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    /* Títulos */
+    h1 {
+      font-size: 1.8rem;
+    }
+  
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    /* Ajustes para pantallas medianas (tabletas) */
+    
+    .mapa {
+      grid-template-columns: repeat(8, 40px);
+      grid-template-rows: repeat(8, 40px);
+    }
+  
+    input[type="text"], input[type="number"], select {
+      width: 80%;
+      max-width: 250px;
+    }
+  
+    button {
+      width: 100%;
+    }
+  
+    /* Ajustes en el tamaño del texto */
+    h1 {
+      font-size: 1.6rem;
+    }
+  
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* Ajustes para pantallas pequeñas (tabletas pequeñas y móviles) */
+    
+    .mapa {
+      grid-template-columns: repeat(6, 40px);
+      grid-template-rows: repeat(6, 40px);
+    }
+  
+    .formulario {
+      padding: 15px;
+      margin: 10px 0;
+    }
+  
+    input[type="text"], input[type="number"], select {
+      width: 90%;
+      max-width: 220px;
+    }
+  
+    button {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    h1 {
+      font-size: 1.4rem;
+    }
+  
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Ajustes para pantallas extra pequeñas (móviles) */
+    
+    .mapa {
+      grid-template-columns: repeat(4, 30px);
+      grid-template-rows: repeat(4, 30px);
+    }
+  
+    .formulario {
+      padding: 10px;
+      margin: 5px 0;
+    }
+  
+    input[type="text"], input[type="number"], select {
+      width: 90%;
+      max-width: 200px;
+    }
+  
+    button {
+      width: 100%;
+      padding: 8px;
+    }
+  
+    h1 {
+      font-size: 1.2rem;
+    }
+  
+    h2 {
+      font-size: 1rem;
+    }
+    
+    /* Ajustar mensaje de final de juego */
+    #resultado {
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+  }
+  
+  /* Ajustes específicos para la interfaz de usuario */
+  @media (max-width: 576px) {
+    /* Botones */
+    button {
+      font-size: 0.9rem;
+    }
+  
+    .message {
+      font-size: 0.9rem;
+    }
+  
+    /* Ajustar el tamaño de las celdas del tablero */
+    .mapa .cell {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  

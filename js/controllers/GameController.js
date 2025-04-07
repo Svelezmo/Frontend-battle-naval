@@ -1,4 +1,7 @@
-// js/controllers/GameController.js
+import { getRandomBoardPosition, showToast } from '../utils/helpers.js';
+import { validatePlayerName, validateLocation } from './validators.js';
+
+
 class GameController {
     constructor() {
       this.game = null;

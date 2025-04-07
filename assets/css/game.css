@@ -1,0 +1,160 @@
+/* game.css - Estilos personalizados para el juego de Batalla Naval */
+
+/* Usando clases de Bootstrap */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;  /* Fondo claro para toda la página */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  /* Pantallas del juego */
+  .pantalla {
+    display: none;
+    text-align: center;
+  }
+  
+  .pantalla.active {
+    display: block;
+  }
+  
+  /* Títulos */
+  h1, h2 {
+    font-size: 2rem;
+    color: #007bff;
+  }
+  
+  /* Formulario de entrada de usuario */
+  .formulario {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  label {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Inputs y select */
+  input[type="text"], input[type="number"], select {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Mapa de juego */
+  .mapa {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 5px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .mapa .cell {
+    width: 40px;
+    height: 40px;
+    background-color: #add8e6; /* Agua */
+    border: 1px solid #aaa;
+  }
+  
+  .mapa .cell.ship {
+    background-color: #008080; /* Barco */
+  }
+  
+  .mapa .cell.hit {
+    background-color: red; /* Golpe */
+  }
+  
+  .mapa .cell.miss {
+    background-color: #ccc; /* Fallo */
+  }
+  
+  /* Mensajes de estado */
+  .message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .message.success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .message.error {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .message.warning {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .mapa {
+      grid-template-columns: repeat(5, 40px);
+      grid-template-rows: repeat(5, 40px);
+    }
+  
+    input[type="text"], select, input[type="number"] {
+      width: 90%;
+    }
+  
+    button {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .mapa {
+      grid-template-columns: repeat(3, 30px);
+      grid-template-rows: repeat(3, 30px);
+    }
+  
+    input[type="text"], select, input[type="number"] {
+      width: 100%;
+    }
+  
+    button {
+      width: 90%;
+    }
+  }
+  
