@@ -6,6 +6,9 @@ class Game {
       this.location = config.location;
       this.boardSize = config.boardSize || { rows: 10, cols: 10 };
       this.weather = null;
+      this.gameController = new GameController();
+      this.uiController = new UIController();
+      this.ships = [];
       
       // Crear tableros para jugador y máquina
       this.playerBoard = new Board(this.boardSize.rows, this.boardSize.cols);
@@ -36,7 +39,7 @@ class Game {
         { name: 'Crucero', size: 3, count: 1 },
         { name: 'Lancha', size: 2, count: 1 }
       ];
-    }
+    } 
     
     // Iniciar configuración del juego
     startSetup() {
@@ -80,6 +83,7 @@ class Game {
     startGame() {
       if (this.playerBoard.hasAllShipsPlaced(this.shipTypes)) {
         this.currentState = this.state.PLAYING;
+        this.uiController.showGameScreen();
         return true;
       }
       return false;
@@ -183,6 +187,11 @@ class Game {
         return null;
       }
     }
+    
+    endGame(winner) {
+      this.uiController.showFinalScreen(winner);
+    }
+    
     
     // Enviar puntuación al finalizar
     async sendScore() {

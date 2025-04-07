@@ -1,4 +1,4 @@
-import { validateShipPlacement } from './validators.js'; 
+import { validateShipPlacement } from '../utils/validators';
 
 class BoardController {
     constructor(gameController, uiController) {
@@ -16,6 +16,31 @@ class BoardController {
       this.renderSetupBoard();
       this.setupEventListeners();
     }
+
+    // Colocar un barco
+  placeShip(x, y) {
+    if (validateShipPlacement(this.gameController.board, this.currentShipType, x, y, this.isVertical)) {
+      this.gameController.placeShip(this.currentShipType, x, y, this.isVertical);
+      this.renderBoard(); // Actualizamos el tablero
+    } else {
+      console.error('La colocación del barco no es válida.');
+    }
+  }
+
+  // Función para renderizar el tablero después de colocar los barcos
+  renderBoard() {
+    const { rows, cols } = this.gameController.board;
+    this.playerBoardElement.innerHTML = '';
+    this.playerBoardElement.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        this.playerBoardElement.appendChild(cell);
+      }
+    }
+  }
     
     // Renderizar el tablero de configuración para colocar barcos
     renderSetupBoard() {

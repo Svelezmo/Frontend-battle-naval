@@ -1,5 +1,3 @@
-// js/api.js
-
 // Obtener países desde el backend
 async function fetchCountries() {
   try {
@@ -12,10 +10,10 @@ async function fetchCountries() {
     console.error("Error al cargar países:", error);
     throw error;
   }
-}
+} 
 
 // Obtener información del clima
-async function fetchWeather(city) {
+export async function fetchWeather(city) {
   try {
     const apiKey = "be129bbfed895b76701dd13490560118"; // Tu API key
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
@@ -75,3 +73,10 @@ async function fetchRanking() {
     throw error;
   }
 }
+
+// Exportar las demás funciones
+export {
+  fetchCountries,
+  sendScoreToServer,
+  fetchRanking
+};

@@ -9,6 +9,9 @@ class UIController {
         gameOver: document.getElementById('game-over-screen'),
         ranking: document.getElementById('ranking-screen')
       };
+      this.startScreen = document.getElementById('start-screen');
+      this.gameScreen = document.getElementById('game-screen');
+      this.finalScreen = document.getElementById('final-screen');
       this.messageContainer = document.getElementById('message-container');
       this.scoreDisplay = document.getElementById('score-display');
       this.weatherDisplay = document.getElementById('weather-display');
@@ -22,6 +25,27 @@ class UIController {
         this.screens.initial.classList.remove('hidden');
       }
     }
+
+    showStartScreen() {
+      this.startScreen.style.display = 'block';
+      this.gameScreen.style.display = 'none';
+      this.finalScreen.style.display = 'none';
+    }
+
+    // Mostrar la pantalla del juego
+  showGameScreen() {
+    this.startScreen.style.display = 'none';
+    this.gameScreen.style.display = 'block';
+    this.finalScreen.style.display = 'none';
+  }
+
+  // Mostrar la pantalla final
+  showFinalScreen(winner) {
+    this.startScreen.style.display = 'none';
+    this.gameScreen.style.display = 'none';
+    this.finalScreen.style.display = 'block';
+    document.getElementById('winner').innerText = winner;
+  }
     
     // Mostrar pantalla de configuración de barcos
     showSetupScreen() {

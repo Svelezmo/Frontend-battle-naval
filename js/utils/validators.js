@@ -1,6 +1,5 @@
 /**
  * Funciones de validación para el juego de Batalla Naval
- * Proyecto Frontend 2025
  */
 
 // Constantes del juego según requerimientos
@@ -41,6 +40,7 @@ function isValidBoardSize(rows, cols) {
   );
 }
 
+
 /**
  * Valida si una coordenada está dentro del tablero
  * @param {number} x - Coordenada X
@@ -62,6 +62,34 @@ function isValidCoordinate(x, y, boardSize) {
 function isCellFree(board, x, y) {
   return board[y][x] === null || board[y][x] === MAP_SYMBOLS.WATER;
 }
+
+// Función para validar la colocación de un barco
+export function validateShipPlacement(board, ship, x, y, isVertical) {
+  const shipSize = ship.size;
+
+  // Verificar si el barco está dentro de los límites del tablero
+  if (isVertical) {
+    if (y + shipSize > board.length) return false; // Si se sale por el borde vertical
+  } else {
+    if (x + shipSize > board[0].length) return false; // Si se sale por el borde horizontal
+  }
+
+  // Verificar si hay superposición con otro barco
+  for (let i = 0; i < shipSize; i++) {
+    const checkX = isVertical ? x : x + i;
+    const checkY = isVertical ? y + i : y;
+    if (board[checkY][checkX] !== 'water') {
+      return false; // Si ya hay algo en esa celda
+    }
+  }
+  return true; // Si todo es válido
+}
+
+// Validar que las coordenadas sean correctas
+export function validateCoordinates(x, y, board) {
+  return x >= 0 && x < board[0].length && y >= 0 && y < board.length;
+}
+
 
 /**
  * Valida si un barco puede ser colocado en una posición específica
@@ -281,7 +309,18 @@ function calculateScore(gameStats) {
   score -= gameStats.adjacentMisses * 3;
   
   return score;
+} 
+
+// validators.js
+export function validateLocation(location) {
+  // Lógica para validar la ubicación
+  if (location && location.trim() !== '') {
+    return true;
+  }
+  return false;
 }
+
+
 
 // Exportar todas las funciones de validación
 export {

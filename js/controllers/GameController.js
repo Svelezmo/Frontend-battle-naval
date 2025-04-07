@@ -1,5 +1,6 @@
 import { getRandomBoardPosition, showToast } from '../utils/helpers.js';
-import { validatePlayerName, validateLocation } from './validators.js';
+import { validatePlayerName, validateLocation } from '../utils/validators.js';
+import { isValidLocation } from '../utils/validators.js';
 
 
 class GameController {
@@ -7,6 +8,9 @@ class GameController {
       this.game = null;
       this.boardController = null;
       this.uiController = null;
+      this.board = new Board();
+      this.currentPlayer = 'player'; // Puede ser 'player' o 'computer'
+      this.ships = [];
       this.gameConfig = {
         playerName: '',
         countryCode: '',
@@ -82,6 +86,27 @@ class GameController {
       }
       
       return started;
+    }
+
+     // Colocar un barco en el tablero
+    placeShip(ship, x, y, isVertical) {
+      if (validateShipPlacement(this.board, ship, x, y, isVertical)) {
+        this.board.placeShip(ship, x, y, isVertical);
+      }
+    }
+
+    // Realizar un disparo
+    makeMove(x, y) {
+     if (validateCoordinates(x, y, this.board)) {
+        const result = this.board.receiveAttack(x, y);
+       if (result) {
+         console.log('¡El disparo ha sido un acierto!');
+       } else {
+          console.log('¡El disparo ha fallado!');
+       }
+       return result;
+      }
+      return null;
     }
     
     // Jugador realiza un ataque

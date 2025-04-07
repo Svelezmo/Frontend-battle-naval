@@ -76,4 +76,20 @@ class RenderBoard {
   }
 }
 
+export function renderBoard(board) {
+  const boardElement = document.getElementById('board');
+  boardElement.innerHTML = '';
+  for (let row = 0; row < board.length; row++) {
+    for (let col = 0; col < board[row].length; col++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      if (board[row][col] !== 'water') {
+        cell.classList.add(board[row][col]); // hit, miss, ship, etc.
+      }
+      boardElement.appendChild(cell);
+    }
+  }
+}
+
+
 export default RenderBoard;
