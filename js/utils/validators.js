@@ -64,7 +64,7 @@ function isCellFree(board, x, y) {
 }
 
 // Función para validar la colocación de un barco
-export function validateShipPlacement(board, ship, x, y, isVertical) {
+export async function validateShipPlacement(board, ship, x, y, isVertical) {
   const shipSize = ship.size;
 
   // Verificar si el barco está dentro de los límites del tablero

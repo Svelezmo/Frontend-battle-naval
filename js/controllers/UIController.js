@@ -1,5 +1,5 @@
 // js/controllers/UIController.js
-class UIController {
+export class UIController {
     constructor(gameController) {
       this.gameController = gameController;
       this.screens = {

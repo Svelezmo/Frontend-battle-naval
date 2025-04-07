@@ -11,6 +11,7 @@ import { Player } from './models/Player.js';
 import { Board } from './models/Board.js';
 import { Ship } from './models/Ship.js';
 import { SHIP_TYPES, MIN_BOARD_SIZE, MAX_BOARD_SIZE } from './utils/validators.js';
+import { fetchCountries } from './api.js'; // Función cargar paises
 import * as config from './config.js';
 
 // Función que se ejecuta cuando el DOM está completamente cargado
@@ -25,30 +26,32 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Configurar eventos para el formulario inicial
     function setupInitialScreen() {
-        const playerForm = document.getElementById('player-form');
+        const playerForm = document.getElementById('formulario');
         if (playerForm) {
-            playerForm.addEventListener('submit', handlePlayerFormSubmit);
+            playerForm.addEventListener('iniciar-juego', handlePlayerFormSubmit());
             
             // Cargar lista de países desde la API
             loadCountriesList();
         }
         
         // Ocultar pantallas de juego y ranking
-        document.getElementById('game-screen').style.display = 'none';
-        document.getElementById('ranking-screen').style.display = 'none';
+        document.getElementById('game-screen');
+        document.getElementById('ranking-screen');
     }
     
-    // Cargar la lista de países desde la API
+     //Cargar la lista de países desde la API
     async function loadCountriesList() {
         try {
-            const response = await fetch('http://127.0.0.1:5000/countries');
-            const countries = await response.json();
+            const response = await fetchCountries();
+            console.log(response)
+            const countries = response;
+            console.log("sisas aqui ando")
             
-            const countrySelect = document.getElementById('country-select');
+            const countrySelect = document.getElementById('pais');
             countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.code;
-                option.textContent = country.name;
+                const option = document.createElement("option");
+                option.value = Object.keys(country)[0];
+                option.textContent = country[option.value];
                 countrySelect.appendChild(option);
             });
         } catch (error) {

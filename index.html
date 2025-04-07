@@ -15,20 +15,20 @@
   <link rel="stylesheet" href="assets/css/game.css">
 
   <!-- Incluir JS -->
-<script type="module" src="./js/views/renderUI.js" defer></script>
-<script type="module" src="./js/controllers/BoardController.js" defer></script>
-<script type="module" src="./js/controllers/GameController.js" defer></script>
-<script type="module" src="./js/controllers/UIController.js" defer></script>
-<script type="module" src="./js/models/Ship.js" defer></script>
-<script type="module" src="./js/models/Board.js" defer></script>
-<script type="module" src="./js/models/Game.js" defer></script>
-<script type="module" src="./js/models/Player.js" defer></script>
-<script type="module" src="./js/models/Score.js" defer></script>
-<script type="module" src="./js/utils/helpers.js" defer></script>
-<script type="module" src="./js/api.js" defer></script>
-<script type="module" src="./js/utils/validators.js" defer></script>
-<script type="module" src="./js/config.js" defer></script>
-<script type="module" src="./js/main.js" defer></script>
+  <script type="module" src="./js/views/renderUI.js" defer></script>
+  <script type="module" src="./js/controllers/BoardController.js" defer></script>
+  <script type="module" src="./js/controllers/GameController.js" defer></script>
+  <script type="module" src="./js/controllers/UIController.js" defer></script>
+  <script type="module" src="./js/models/Ship.js" defer></script>
+  <script type="module" src="./js/models/Board.js" defer></script>
+  <script type="module" src="./js/models/Game.js" defer></script>
+  <script type="module" src="./js/models/Player.js" defer></script>
+  <script type="module" src="./js/models/Score.js" defer></script>
+  <script type="module" src="./js/utils/helpers.js" defer></script>
+  <script type="module" src="./js/api.js" defer></script>
+  <!--<script type="module" src="./js/utils/validators.js" defer></script>-->
+  <script type="module" src="./js/config.js" defer></script>
+  <script type="module" src="./js/main.js" defer></script>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
     <!-- Pantalla Inicial -->
     <div id="inicio" class="pantalla active">
       <h1>Bienvenido a Batalla Naval</h1>
-      <div class="formulario">
+      <div class="player-form" id="formulario">
         <label for="nickname">Nickname:</label>
         <input type="text" id="nickname" placeholder="Ingresa tu nombre" class="form-control">
 
@@ -54,7 +54,7 @@
         <label for="cols">Columnas del tablero:</label>
         <input type="number" id="cols" min="10" max="20" value="10" class="form-control">
 
-        <button id="iniciarJuego" class="btn btn-primary w-100 mt-3">Iniciar Juego</button>
+        <button id="iniciar-juego" class="btn btn-primary w-100 mt-3">Iniciar Juego</button>
       </div>
     </div>
 

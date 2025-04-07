@@ -1,9 +1,10 @@
 import { getRandomBoardPosition, showToast } from '../utils/helpers.js';
-import { validatePlayerName, validateLocation } from '../utils/validators.js';
+import { validateLocation } from '../utils/validators.js';
 import { isValidLocation } from '../utils/validators.js';
+import { Board } from '../models/Board.js';
 
 
-class GameController {
+export class GameController {
     constructor() {
       this.game = null;
       this.boardController = null;

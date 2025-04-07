@@ -1,4 +1,4 @@
-class Player {
+export class Player {
     constructor(name, countryCode, isHuman = true) {
       this.name = name;
       this.countryCode = countryCode;

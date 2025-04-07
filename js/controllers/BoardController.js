@@ -1,6 +1,6 @@
-import { validateShipPlacement } from '../utils/validators';
+import {validateShipPlacement} from '../utils/validators.js' 
 
-class BoardController {
+export class BoardController {
     constructor(gameController, uiController) {
       this.gameController = gameController;
       this.uiController = uiController;

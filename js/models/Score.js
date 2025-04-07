@@ -1,5 +1,5 @@
 // models/Score.js
-class Score {
+export class Score {
     constructor(initialScore = 0) {
       this.value = initialScore;
       this.history = [];

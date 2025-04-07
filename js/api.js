@@ -1,5 +1,5 @@
 // Obtener países desde el backend
-async function fetchCountries() {
+export async function fetchCountries() {
   try {
     const response = await fetch("http://127.0.0.1:5000/countries");
     if (!response.ok) {
@@ -76,7 +76,6 @@ async function fetchRanking() {
 
 // Exportar las demás funciones
 export {
-  fetchCountries,
   sendScoreToServer,
   fetchRanking
 };

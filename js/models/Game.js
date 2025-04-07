@@ -1,5 +1,5 @@
 // models/Game.js
-class Game {
+export class Game {
     constructor(config) {
       this.playerName = config.playerName;
       this.countryCode = config.countryCode;
